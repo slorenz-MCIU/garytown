@@ -120,7 +120,7 @@ if (Test-DISMFromOSDCloudUSB -eq $true){
 }
 #>
 #Enable HPIA | Update HP BIOS | Update HP TPM
- 
+<# 
 if (Test-HPIASupport){
     Write-SectionHeader -Message "Detected HP Device, Enabling HPIA, HP BIOS and HP TPM Updates"
     #$Global:MyOSDCloud.DevMode = [bool]$True
@@ -145,7 +145,7 @@ if ($Manufacturer -match "Lenovo") {
     }
     
 }
-
+#>
 
 #write variables to console
 Write-SectionHeader "OSDCloud Variables"
@@ -171,16 +171,18 @@ write-host -ForegroundColor Yellow "Updating $OfflineModulePath using $ModulePat
 copy-item "$ModulePath\*" "$OfflineModulePath"  -Force -Recurse
 #>
 #Copy CMTrace Local:
-if (Test-path -path "x:\windows\system32\cmtrace.exe"){
+<#if (Test-path -path "x:\windows\system32\cmtrace.exe"){
     copy-item "x:\windows\system32\cmtrace.exe" -Destination "C:\Windows\System\cmtrace.exe" -verbose
 }
+#>
 
-if ($Manufacturer -match "Lenovo") {
+<#if ($Manufacturer -match "Lenovo") {
     $PowerShellSavePath = 'C:\Program Files\WindowsPowerShell'
     Write-Host "Copy-PSModuleToFolder -Name LSUClient to $PowerShellSavePath\Modules"
     Copy-PSModuleToFolder -Name LSUClient -Destination "$PowerShellSavePath\Modules"
     Write-Host "Copy-PSModuleToFolder -Name Lenovo.Client.Scripting to $PowerShellSavePath\Modules"
     Copy-PSModuleToFolder -Name Lenovo.Client.Scripting -Destination "$PowerShellSavePath\Modules"
 }
+#>
 #Restart
 #restart-computer
