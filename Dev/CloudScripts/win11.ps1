@@ -82,7 +82,7 @@ $OSLanguage = 'en-us'
 
 #Set OSDCloud Vars
 $Global:MyOSDCloud = [ordered]@{
-    Restart = [bool]$False
+    Restart = [bool]$True
     RecoveryPartition = [bool]$true
     OEMActivation = [bool]$True
     WindowsUpdate = [bool]$true
@@ -147,4 +147,4 @@ copy-item "$ModulePath\*" "$OfflineModulePath"  -Force -Recurse
 #>
 
 #Restart
-restart-computer
+#restart-computer
