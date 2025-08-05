@@ -185,4 +185,4 @@ copy-item "$ModulePath\*" "$OfflineModulePath"  -Force -Recurse
 }
 #>
 #Restart
-#restart-computer
+restart-computer
