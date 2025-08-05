@@ -119,33 +119,8 @@ if (Test-DISMFromOSDCloudUSB -eq $true){
     }
 }
 #>
-#Enable HPIA | Update HP BIOS | Update HP TPM
-<# 
-if (Test-HPIASupport){
-    Write-SectionHeader -Message "Detected HP Device, Enabling HPIA, HP BIOS and HP TPM Updates"
-    #$Global:MyOSDCloud.DevMode = [bool]$True
-    $Global:MyOSDCloud.HPTPMUpdate = [bool]$True
-    if ($Product -ne '83B2' -and $Model -notmatch "zbook"){$Global:MyOSDCloud.HPIAALL = [bool]$true} #I've had issues with this device and HPIA
-    #{$Global:MyOSDCloud.HPIAALL = [bool]$true}
-    $Global:MyOSDCloud.HPBIOSUpdate = [bool]$true
-    #$Global:MyOSDCloud.HPCMSLDriverPackLatest = [bool]$true #In Test 
-    #Set HP BIOS Settings to what I want:
-    iex (irm https://raw.githubusercontent.com/gwblok/garytown/master/OSD/CloudOSD/Manage-HPBiosSettings.ps1)
-    Manage-HPBiosSettings -SetSettings
-}
 
-if ($Manufacturer -match "Lenovo") {
-    #Set Lenovo BIOS Settings to what I want:
-    iex (irm https://raw.githubusercontent.com/gwblok/garytown/master/OSD/CloudOSD/Manage-LenovoBiosSettings.ps1)
-    try {
-        Manage-LenovoBIOSSettings -SetSettings
-    }
-    catch {
-        <#Do this if a terminating exception happens#>
-    }
-    
-}
-#>
+
 
 #write variables to console
 Write-SectionHeader "OSDCloud Variables"
@@ -170,19 +145,6 @@ $OfflineModulePath = (Get-ChildItem -Path "C:\Program Files\WindowsPowerShell\Mo
 write-host -ForegroundColor Yellow "Updating $OfflineModulePath using $ModulePath - For Dev Purposes Only"
 copy-item "$ModulePath\*" "$OfflineModulePath"  -Force -Recurse
 #>
-#Copy CMTrace Local:
-<#if (Test-path -path "x:\windows\system32\cmtrace.exe"){
-    copy-item "x:\windows\system32\cmtrace.exe" -Destination "C:\Windows\System\cmtrace.exe" -verbose
-}
-#>
 
-<#if ($Manufacturer -match "Lenovo") {
-    $PowerShellSavePath = 'C:\Program Files\WindowsPowerShell'
-    Write-Host "Copy-PSModuleToFolder -Name LSUClient to $PowerShellSavePath\Modules"
-    Copy-PSModuleToFolder -Name LSUClient -Destination "$PowerShellSavePath\Modules"
-    Write-Host "Copy-PSModuleToFolder -Name Lenovo.Client.Scripting to $PowerShellSavePath\Modules"
-    Copy-PSModuleToFolder -Name Lenovo.Client.Scripting -Destination "$PowerShellSavePath\Modules"
-}
-#>
 #Restart
 restart-computer
